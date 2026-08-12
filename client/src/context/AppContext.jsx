@@ -3,6 +3,11 @@ import api from '../api/api.js'
 
 const AppContext = createContext(undefined);
 
+/**
+ * Provides authentication state to descendant components.
+ * @param {React.ReactNode} children - Components rendered within the authentication context.
+ * @returns {JSX.Element} The authentication context provider.
+ */
 export function AppContextProvider({ children }) {
 
 
