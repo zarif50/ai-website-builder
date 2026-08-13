@@ -1,9 +1,10 @@
 import React from "react";
 import { useAppContext } from "../context/AppContext.jsx";
 import PromptInput from "../components/PromptInput.jsx";
+import { homeTags } from "../assets/assets.js";
 
 const Homepage = () => {
-  const { user } = useAppContext();
+  const { user, projects,loadingProjects,generatingProject,loadProjects,handleGenerate,handleDelete,logout } = useAppContext();
 
   return (
     <div className="h-screen overflow-y-scroll text-white font-sans bg-[url('/bg-img.png')] bg-cover bg-center bg-no-repeat">
@@ -27,11 +28,11 @@ const Homepage = () => {
         <div className="flex items-center gap-4 text-sm font-medium text-zinc-300">
           <span>{user?.name}</span>
 
-          <button
+          <button onClick={logout}
             className="py-1.5 px-3 border border-white/20 text-white
             hover:bg-white/10 text-xs rounded-md cursor-pointer"
           >
-            Logout
+           Sign out
           </button>
         </div>
       </nav>
@@ -81,14 +82,28 @@ const Homepage = () => {
           {/* Prompt Input */}
           <div className="w-full mt-6">
             <PromptInput
-              onSubmit={() => {}}
-              loading={false}
+              onSubmit={handleGenerate}
+              loading={generatingProject}
               placeholder="Create a Portfolio Website..."
               variant="glass"
               autoFocus
             />
           </div>
+              {/*scrolling marque tags*/}
+              <div className="masked-marquee w-full mt-4 max-w-2xl overflow-hidden py-1">
+                <div className="animate-marquee gap-3">
+                    {homeTags.map((tag,i)=>(
+                      <button key={i} onClick={()=>handleGenerate(tag)}
+                      disabled={generatingProject}
+                      className="px-4 py-1.5 border rounded-full text-sm text-white bg-white/10border-white/25
+                      hover:bg-white/20 transition cursor-pointer shrink-0 font-medium">
+                        {tag}
 
+                      </button>
+                    ))}
+                </div>
+
+              </div>
         </div>
       </div>
     </div>
